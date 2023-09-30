@@ -1,0 +1,48 @@
+.btn {
+    width: 200px;
+}
+
+.card {
+    height: 600px;
+    background-color: rgb(88, 88, 88);
+    color: white;
+}
+
+.contenedor {
+    margin-top: 80px;
+}
+
+.nombreCanal {
+    color: white;
+    font-weight: bold;
+}
+
+@media (max-width: 993px) {
+    .contenedor {
+        margin-top: 130px;
+    }
+}
+
+@media (max-width: 895px) {
+    .card {
+        height: 620px;
+    }
+}
+
+@media (max-width: 685px) {
+    .card {
+        height: 620px;
+    }
+}
+
+@media (max-width: 577px) {
+    .card {
+        height: 720px;
+    }
+}
+
+@media (max-width: 403px) {
+    .card {
+        height: 620px;
+    }
+}

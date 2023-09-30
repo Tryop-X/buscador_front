@@ -1,0 +1,25 @@
+.iconoFavs {
+    width: 15px !important;
+    height: 15px;
+}
+
+img {
+    width: 50px;
+}
+
+.nav {
+    color: white !important;
+}
+
+.nav-link {
+    font-size: large;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: xx-large;
+}
+
+.nav-link {
+    color: white !important;
+}

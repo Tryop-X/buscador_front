@@ -1,0 +1,40 @@
+<div class="row contenedor">
+    <div class="col-12 col-lg-3 col-md-4 col-sm-6" *ngFor="let video of getVideosFavoritos">
+        <div class="card mt-3 mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <img src="{{video.snippet.thumbnails.high.url}}" alt="">
+                </div>
+                <div class="row mt-3">
+                    <h5>{{video.snippet.title}}</h5>
+                </div>
+
+                <div class="row d-flex flex-row">
+                    <div class="col-12 col-lg-6">
+                        <a class="nombreCanal" href="https://www.youtube.com/channel/{{video.snippet.channelId}}">{{video.snippet.channelTitle}}</a>
+                    </div>
+                    <div class="col-12 col-lg-6 d-flex align-items-center">
+                        <p>{{video.snippet.publishTime | date: 'dd-MM-yyyy'}}</p>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <p>{{video.snippet.description}}</p>
+                </div>
+
+                <div class="row mt-2 d-flex justify-content-around">
+                    <a class="btn text-white bg-dark botonVer" href="https://www.youtube.com/watch?v={{video.id.videoId}}" target="_blank">Ver</a>
+
+                    <a class="btn text-white bg-danger botonFavs" (click)="borrarVideoFavorito(video.id.videoId)">Borrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="getVideosFavoritos.length > 0">
+    <div class="col-12 col-lg-12 mt-4 d-flex justify-content-center">
+        <a class="btn text-white bg-danger" (click)="borrarTodosFavoritos()">Borrar todos</a>
+    </div>
+</div>
