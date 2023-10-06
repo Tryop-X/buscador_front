@@ -3,7 +3,7 @@
     <img src="../../../assets/{{tituloImagen}}" alt="Imagen no disponible">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" routerLink="" routerLinkActive="active">Youtubes</a>
+        <a class="navbar-brand" routerLink="" routerLinkActive="active">Indexer v1.0</a>
 
         <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -11,10 +11,10 @@
 
         <img src="../../../assets/menu.png" alt="" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav" style="width: 140px;">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" routerLink="/favoritos">Favoritos<img class="iconoFavs" src="../../../assets/favourite.png" alt=""></a>
+              <a class="nav-link" routerLink="/favoritos">Favoritos&nbsp;<img class="iconoFavs" src="../../../assets/favourite.png" alt=""></a>
             </li>
             <li></li>
           </ul>
@@ -24,7 +24,7 @@
   </div>
 
   <div class="col-10 col-lg-7 col-md-8 col-sm-10 d-flex align-items-center">
-    
+
     <input (keyup.enter)="buscar(texto.value)" type="text" class="form-control p-2" placeholder="Buscar..." #texto>
 
   </div>

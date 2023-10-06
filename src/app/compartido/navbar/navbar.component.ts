@@ -10,7 +10,7 @@ export class NavbarComponent {
 
   constructor(private service:YoutubeService) { }
 
-  tituloImagen: string = "logo.png";
+  tituloImagen: string = "brand.png";
 
   @ViewChild("texto") texto!:ElementRef<HTMLInputElement> ;
 
