@@ -17,7 +17,6 @@ export class YoutubeService {
   public videosFavoritos: Video[] = [];
   public estaCargando: boolean = false;
 
-  private api_key: string = "AIzaSyAdMSwiKNQevSh82RQHaEBGpoY1uYYX3xo";
   private limit: number = 12;
 
   buscarVideo(busqueda: string) {
@@ -26,27 +25,30 @@ export class YoutubeService {
     busqueda = busqueda.toLowerCase();
 
     if((busqueda != "")) {
-      this.httpClient.get<Youtube>(`https://www.googleapis.com/youtube/v3/search?key=${this.api_key}&q=${busqueda}&part=snippet&type=video&maxResults=${this.limit}`).subscribe((respuesta) =>  {
+      this.httpClient.get<Video[]>(`http://127.0.0.1:5000/get_video?consulta=${busqueda}`)
+        .subscribe(
+        (respuesta) =>  {
         if(respuesta) {
+          console.log("llego")
           this.estaCargando = false;
         }
-        
-      this.videosBuscados = respuesta.items;
+
+      this.videosBuscados = respuesta;
     });
     }
   }
 
   agregarVideoAFavoritos(video: Video) {
-    if(!this.videosFavoritos.some(videoEnArray => videoEnArray.id.videoId == video.id.videoId)) {
+    if(!this.videosFavoritos.some(videoEnArray => videoEnArray.cod == video.cod)) {
       this.videosFavoritos.push(video);
       console.log(this.videosFavoritos);
-      
+
       localStorage.setItem("Favoritos", JSON.stringify(this.videosFavoritos));
     }
   }
 
   borrarVideoFavorito(id: string) {
-    let indice = this.videosFavoritos.findIndex(videoEnArray => videoEnArray.id.videoId == id);
+    let indice = this.videosFavoritos.findIndex(videoEnArray => videoEnArray.cod == id);
     if(indice != -1) {
       this.videosFavoritos.splice(indice, 1);
       localStorage.setItem("Favoritos", JSON.stringify(this.videosFavoritos));

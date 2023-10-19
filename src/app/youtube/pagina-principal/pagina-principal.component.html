@@ -4,38 +4,33 @@
     </div>
 
     <div class="col-12 col-lg-3 col-md-4 col-sm-6" *ngFor="let video of getVideos">
-        
+
         <div class="card mt-3 mb-3">
             <div class="card-body">
 
                 <div class="row">
-                    <img src="{{video.snippet.thumbnails.high.url}}" alt="Imagen no disponible">
+                    <img src="{{ 'https://i.ytimg.com/vi/' + video.cod +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
                 </div>
 
                 <div class="row mt-3">
-                    <h5>{{video.snippet.title}}</h5>
+                    <h5>{{ video.title }}</h5>
                 </div>
 
-                <div class="row d-flex flex-row">
+                <div class="row d-flex flex-row" *ngFor="let trans of video.transcription">
                     <div class="col-12 col-lg-6">
-                        <a class="nombreCanal" href="https://www.youtube.com/channel/{{video.snippet.channelId}}">{{video.snippet.channelTitle}}</a>
+                      <span class="truncateContent">{{trans.content}}</span>
                     </div>
-                    <div class="col-12 col-lg-6 d-flex align-items-center">
-                        <p>{{video.snippet.publishTime | date: 'dd-MM-yyyy'}}</p>
+                    <div class="col-12 col-lg-6 d-flex align-items-end">
+                        <a  href="https://www.youtube.com/watch?v={{video.cod}}&t={{trans.start}}s">{{convertSecondsToMinutes(trans.start, trans.end)}}</a>
                     </div>
-                    
-                </div>
 
-                <div class="row">
-                    <p>{{video.snippet.description}}</p>
                 </div>
 
                 <div class="row mt-3 d-flex justify-content-around">
-                    <a class="btn text-white bg-dark botonVer" href="https://www.youtube.com/watch?v={{video.id.videoId}}" target="_blank">Ver</a>
-
-                    <a class="btn text-white bg-danger botonFavs" (click)="agregarVideo(video)">Favoritos</a>
+<!--                    <a class="btn text-white bg-dark botonVer" href="https://www.youtube.com/watch?v={{video.cod}}" target="_blank">Ver</a>-->
+                    <a class="btn text-white bg-danger botonFavs" (click)="agregarVideo(video)">&#8902;</a>
                 </div>
-                
+
             </div>
         </div>
 

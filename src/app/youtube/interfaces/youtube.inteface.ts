@@ -7,11 +7,27 @@ export interface Youtube {
     items:         Video[];
 }
 
+// export interface Video {
+//     kind:    ItemKind;
+//     etag:    string;
+//     id:      ID;
+//     snippet: Snippet;
+// }
+
 export interface Video {
-    kind:    ItemKind;
-    etag:    string;
-    id:      ID;
-    snippet: Snippet;
+  url:    string;
+  transcription: Content[];
+  description: Content[];
+  title: string;
+  resume: string;
+  category: string;
+  cod: string
+}
+
+export interface Content {
+  start:    number;
+  end:    number;
+  content: string;
 }
 
 export interface ID {

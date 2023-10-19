@@ -25,7 +25,7 @@
     width: 60px;
     height: 60px;
 }
-   
+
 .loader::before {
     content: "";
     box-sizing: border-box;
@@ -41,7 +41,7 @@
 .spinner {
     height: 100vh;
 }
-   
+
 @keyframes spinner8217 {
  to {
   transform: rotate(360deg);
@@ -76,4 +76,12 @@
     .card {
         height: 620px;
     }
+}
+
+.truncateContent {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;  /* Ajusta este valor según tu necesidad */
+  display: inline-block;  /* Para asegurarse de que max-width funcione con span */
 }
