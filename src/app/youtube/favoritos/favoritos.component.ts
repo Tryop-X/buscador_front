@@ -19,7 +19,6 @@ export class FavoritosComponent {
   }
 
   borrarTodosFavoritos() {
-    this.service.borrarTodosFavoritos();
   }
 
 }
