@@ -24,7 +24,7 @@ export class YoutubeService {
     busqueda = busqueda.toLowerCase();
 
     if((busqueda != "")) {
-      this.httpClient.get<Video[]>(`http://127.0.0.1:5000/get_video?consulta=${busqueda}`)
+      this.httpClient.get<Video[]>(`https://guarded-hamlet-56098-47facf15e6f9.herokuapp.com/get_video?consulta=${busqueda}`)
         .subscribe(
         (respuesta) =>  {
         if(respuesta) {
