@@ -25,7 +25,8 @@
 
   <div class="col-10 col-lg-7 col-md-8 col-sm-10 d-flex align-items-center">
 
-    <input (keyup.enter)="buscar(texto.value)" type="text" class="form-control p-2" placeholder="Buscar..." #texto>
+    <input (keyup.enter)="buscar(texto.value)" type="text" class="form-control p-2" placeholder="Buscar..." #texto *ngIf = "currentTab === 'S'">
+    <input (keyup.enter)="buscarRuta(texto.value)" type="text" class="form-control p-2" placeholder="Aprender..." #texto *ngIf = "currentTab === 'R'">
 
   </div>
 

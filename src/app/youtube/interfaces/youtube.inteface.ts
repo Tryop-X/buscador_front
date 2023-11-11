@@ -24,6 +24,14 @@ export interface Video {
   cod: string
 }
 
+export interface Tema {
+  title:    string;
+  videos: Video[];
+  description: Content[];
+  category: string;
+  cod: string
+}
+
 export interface Content {
   start:    number;
   end:    number;

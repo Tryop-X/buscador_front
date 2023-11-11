@@ -1,3 +1,9 @@
+.mat-tab-group {
+  margin-bottom: 48px;
+  color: white;
+  overflow-x: hidden;
+}
+
 .botonVer {
     width: 120px;
 }
@@ -14,16 +20,30 @@
 
 .contenedor {
     margin-top: 80px;
+    overflow-x: hidden;
+}
+
+.conteiner {
+  margin-top: 10px;
+  overflow-x: hidden;
+}
+
+.datos {
+  margin-top: 20px;
+  text-align: center;
 }
 
 .nombreCanal {
     color: white;
-    font-weight: bold;
 }
 
 .loader {
     width: 60px;
     height: 60px;
+}
+
+.img-logo {
+  width: 50px;
 }
 
 .loader::before {

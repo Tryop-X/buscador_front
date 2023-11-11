@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Video, Youtube } from '../interfaces/youtube.inteface';
+import { Tema, Video, Youtube } from '../interfaces/youtube.inteface';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,13 @@ export class YoutubeService {
     this.videosFavoritos = JSON.parse(localStorage.getItem("Favoritos")!) || [];
   }
 
+  //public currentTab = "";
+  private currentTab = new BehaviorSubject<string>("S"); // Cambia 'any' y 'valorInicial' según tus necesidades
+  datosActuales = this.currentTab.asObservable();
+
   public videosBuscados: Video[] = [];
   public videosFavoritos: Video[] = [];
+  public searchedRoute: Tema[] = [];
   public estaCargando: boolean = false;
 
   private limit: number = 12;
@@ -28,7 +34,6 @@ export class YoutubeService {
         .subscribe(
         (respuesta) =>  {
         if(respuesta) {
-          console.log("llego")
           this.estaCargando = false;
         }
 
@@ -53,4 +58,30 @@ export class YoutubeService {
       localStorage.setItem("Favoritos", JSON.stringify(this.videosFavoritos));
     }
   }
+
+  actualizarDatos(nuevosDatos: string) {
+    this.currentTab.next(nuevosDatos);
+  }
+
+  // Implementar nuevo método --------------------------------------------------------------------------
+  buscarRutas(busqueda: string) {
+    this.estaCargando = true;
+    busqueda = busqueda.trim();
+    busqueda = busqueda.toLowerCase();
+
+    if((busqueda != "")) {
+      this.httpClient.get<Tema[]>(`https://guarded-hamlet-56098-47facf15e6f9.herokuapp.com/get_video?consulta=${busqueda}`)
+        .subscribe(
+        (respuesta) =>  {
+        if(respuesta) {
+          this.estaCargando = false;
+        }
+
+      this.searchedRoute = respuesta;
+    });
+    }
+  }
+
+  // -----------------------------------------------------------------------------------------------------
+
 }

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { YoutubeModule } from './youtube/youtube.module';
 import { CompartidoModule } from './compartido/compartido.module';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     YoutubeModule,
     CompartidoModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

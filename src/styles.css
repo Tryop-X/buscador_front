@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: rgb(20, 20, 20) !important;
+    background-color: rgb(36, 36, 36);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-tab-labels .mat-tab-label {
+  border-bottom: 2px solid rgb(6, 95, 168)/* Línea blanca delgada */
 }

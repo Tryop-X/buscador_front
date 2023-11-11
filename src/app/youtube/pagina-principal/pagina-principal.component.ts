@@ -1,18 +1,23 @@
 import { Component } from '@angular/core';
 import { Video } from '../interfaces/youtube.inteface';
 import { YoutubeService } from '../servicios/youtube.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-pagina-principal',
   templateUrl: './pagina-principal.component.html',
   styleUrls: ['./pagina-principal.component.css']
 })
-export class PaginaPrincipalComponent {
+export class PaginaPrincipalComponent{
 
   constructor(private youtubeService:YoutubeService) { }
 
   get getVideos() {
     return this.youtubeService.videosBuscados;
+  }
+
+  get getTemas() {
+    return this.youtubeService.searchedRoute;
   }
 
   get getEstado() {
@@ -38,5 +43,16 @@ export class PaginaPrincipalComponent {
 
     // Devolver el string en el formato deseado
     return `${initialMinutes}m ${initialSeconds.toFixed(0)}s - ${totalMinutes}m ${remainingSeconds.toFixed(0)}s`;
+  }
+
+  onTabChanged(event: MatTabChangeEvent): void {
+    let current : string;
+    console.log('tsb ', event.index); // Imprime el índice del tab seleccionado
+    if( event.index === 0 ){
+      current = "S";
+   }else{
+      current = "R";
+   }
+    this.youtubeService.actualizarDatos(current);
   }
 }

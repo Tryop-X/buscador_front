@@ -1,3 +1,4 @@
-.fondo {
-    background-color: rgb(12, 12, 12);
+.fondo-nav{
+  background: linear-gradient(to top, transparent 0%, rgb(17, 17, 17) 100%);
 }
+
