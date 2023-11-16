@@ -41,59 +41,7 @@
     </mat-tab>
 
     <mat-tab label="Quiero Aprender">
-
-      <div class="col-12 col-lg-12 d-flex justify-content-center align-items-center spinner" *ngIf="getEstado">
-        <div class="loader"></div>
-      </div>
-
-      <div class="datos" *ngIf="!getEstado">
-        <h4>
-          <strong>¡Bienvenido al asistente de aprendijaze!</strong>
-        </h4>
-        <p>
-          <img class="img-logo" src="../../../assets/brand.png">
-        </p>
-        <h5>Aquí te ayudaremos con el material gratuito para que impulses tu aprendijaze y domines lo que quieras.</h5>
-      </div>
-
-      <div class="col-12 col-lg-3 col-md-4 col-sm-6" *ngFor="let tema of getTemas">
-        <div class="card mt-9 mb-9">
-            <div class="card-body">
-
-                <div class="row mt-9">
-                    <h5>{{ tema.title }}</h5>
-                    <h5>{{ tema.description }}</h5>
-                </div>
-
-                <!-- <div class="row">
-                    <img src="{{ 'https://i.ytimg.com/vi/' + tema.cod +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
-                </div> -->
-
-                <div class="row d-flex flex-row" *ngFor="let vids of tema.videos">
-                    <div class="row mt-3">
-                      <h5>{{ vids.title }}</h5>
-                    </div>
-                    <div class="row">
-                      <img src="{{ 'https://i.ytimg.com/vi/' + vids.cod +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
-                    </div>
-                    <!-- <div class="col-12 col-lg-6">
-                      <span class="truncateContent">{{vids.content}}</span>
-                    </div> -->
-                    <!-- <div class="col-12 col-lg-6 d-flex align-items-end">
-                        <a  href="https://www.youtube.com/watch?v={{tema.cod}}&t={{vids.start}}s">{{convertSecondsToMinutes(vids.start, vids.end)}}</a>
-                    </div> -->
-
-                </div>
-
-                <!-- <div class="row mt-3 d-flex justify-content-around">
-                   <a class="btn text-white bg-dark botonVer" href="https://www.youtube.com/watch?v={{video.cod}}" target="_blank">Ver</a>
-                    <a class="btn text-white bg-danger botonFavs" (click)="agregarVideo(video)">&#8902;</a>
-                </div> -->
-
-            </div>
-        </div>
-      </div>
-
+      <app-quiero-aprender [estado]="getEstado" [cursos]="getCursos"></app-quiero-aprender>
     </mat-tab>
   </mat-tab-group>
 </div>

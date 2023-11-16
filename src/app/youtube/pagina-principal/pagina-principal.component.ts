@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Video } from '../interfaces/youtube.inteface';
-import { YoutubeService } from '../servicios/youtube.service';
+import { VideoService } from '../servicios/video.service';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
@@ -10,17 +10,17 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class PaginaPrincipalComponent{
 
-  constructor(private youtubeService:YoutubeService) { }
+  constructor(private youtubeService:VideoService) { }
 
   get getVideos() {
     return this.youtubeService.videosBuscados;
   }
 
-  get getTemas() {
-    return this.youtubeService.searchedRoute;
+  get getCursos() {
+    return this.youtubeService.cursos;
   }
 
-  get getEstado() {
+  get   getEstado() {
     return this.youtubeService.estaCargando;
   }
 

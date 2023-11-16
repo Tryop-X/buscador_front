@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { YoutubeService } from '../servicios/youtube.service';
+import { VideoService } from '../servicios/video.service';
 
 @Component({
   selector: 'app-favoritos',
@@ -8,7 +8,7 @@ import { YoutubeService } from '../servicios/youtube.service';
 })
 export class FavoritosComponent {
 
-  constructor(private service:YoutubeService) { }
+  constructor(private service:VideoService) { }
 
   get getVideosFavoritos() {
     return this.service.videosFavoritos;

@@ -1,0 +1,107 @@
+.mat-tab-group {
+  margin-bottom: 48px;
+  color: white;
+  overflow-x: hidden;
+}
+
+.botonVer {
+  width: 120px;
+}
+
+.botonFavs {
+  width: 120px;
+}
+
+.card {
+  height: 630px;
+  background-color: rgb(88, 88, 88);
+  color: white;
+}
+
+.contenedor {
+  margin-top: 80px;
+  overflow-x: hidden;
+}
+
+.conteiner {
+  margin-top: 10px;
+  overflow-x: hidden;
+}
+
+.datos {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.nombreCanal {
+  color: white;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+}
+
+.img-logo {
+  width: 50px;
+}
+
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-top: 2px solid red;
+  border-right: 2px solid transparent;
+  animation: spinner8217 0.8s linear infinite;
+}
+
+.spinner {
+  height: 100vh;
+}
+
+@keyframes spinner8217 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 993px) {
+  .contenedor {
+    margin-top: 120px;
+  }
+}
+
+@media (max-width: 895px) {
+  .card {
+    height: 620px;
+  }
+}
+
+@media (max-width: 685px) {
+  .card {
+    height: 620px;
+  }
+}
+
+@media (max-width: 577px) {
+  .card {
+    height: 720px;
+  }
+}
+
+@media (max-width: 403px) {
+  .card {
+    height: 620px;
+  }
+}
+
+.truncateContent {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;  /* Ajusta este valor según tu necesidad */
+  display: inline-block;  /* Para asegurarse de que max-width funcione con span */
+}

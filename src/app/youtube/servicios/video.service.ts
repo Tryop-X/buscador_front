@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Tema, Video, Youtube } from '../interfaces/youtube.inteface';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-
+import { environment } from "../../../environments/environment";
+import {CursoModel} from "../interfaces/cursos.model";
 @Injectable({
   providedIn: 'root'
 })
-export class YoutubeService {
+export class VideoService {
+
+  apiUrl = environment.api;
 
   constructor(private httpClient: HttpClient) {
     if(localStorage.getItem("Favoritos"))
@@ -19,7 +22,7 @@ export class YoutubeService {
 
   public videosBuscados: Video[] = [];
   public videosFavoritos: Video[] = [];
-  public searchedRoute: Tema[] = [];
+  public cursos: CursoModel[] = [];
   public estaCargando: boolean = false;
 
   private limit: number = 12;
@@ -30,7 +33,7 @@ export class YoutubeService {
     busqueda = busqueda.toLowerCase();
 
     if((busqueda != "")) {
-      this.httpClient.get<Video[]>(`https://guarded-hamlet-56098-47facf15e6f9.herokuapp.com/get_video?consulta=${busqueda}`)
+      this.httpClient.get<Video[]>(`${this.apiUrl}/get_video?consulta=${busqueda}`)
         .subscribe(
         (respuesta) =>  {
         if(respuesta) {
@@ -70,14 +73,16 @@ export class YoutubeService {
     busqueda = busqueda.toLowerCase();
 
     if((busqueda != "")) {
-      this.httpClient.get<Tema[]>(`https://guarded-hamlet-56098-47facf15e6f9.herokuapp.com/get_video?consulta=${busqueda}`)
+      this.httpClient.post<any>(
+        `${this.apiUrl}/get_cursos`,
+        {'consulta': busqueda})
         .subscribe(
         (respuesta) =>  {
+
         if(respuesta) {
           this.estaCargando = false;
         }
-
-      this.searchedRoute = respuesta;
+      this.cursos = respuesta;
     });
     }
   }

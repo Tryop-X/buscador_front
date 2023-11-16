@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { YoutubeService } from '../../youtube/servicios/youtube.service';
+import { VideoService } from '../../youtube/servicios/video.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class NavbarComponent implements OnInit{
 
-  constructor(private service:YoutubeService) { }
+  constructor(private service:VideoService) { }
 
   //suscripcionDatos: Subscription;
   tituloImagen: string = "brand.png";
