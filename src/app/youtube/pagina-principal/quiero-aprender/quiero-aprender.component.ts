@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {CursoModel} from "../../interfaces/cursos.model";
+import {Aspecto, ChatModel, TemarioModel, VideoYoutube} from "../../interfaces/cursos.model";
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {PreguntasComponent} from "./preguntas/preguntas.component";
-
+import {ResumenComponent} from "./resumen/resumen.component";
+import {VideoService} from "../../servicios/video.service";
+import {FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-quiero-aprender',
   templateUrl: './quiero-aprender.component.html',
@@ -11,22 +12,36 @@ import {PreguntasComponent} from "./preguntas/preguntas.component";
 export class QuieroAprenderComponent implements OnInit {
 
   @Input("estado") estado: boolean = false;
-  @Input("cursos") cursos: CursoModel[] = [];
+  @Input("temario") temario: TemarioModel = new TemarioModel();
 
-
+  message = new FormControl('', [Validators.required]);
+  chats: ChatModel[] = []
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private youtubeService: VideoService
   ) { }
 
   ngOnInit(): void {
   }
 
-  abrirCurso(curso: CursoModel){
-    this.dialog.open(PreguntasComponent, {
+  abrirCurso(video: VideoYoutube){
+    this.dialog.open(ResumenComponent, {
       width: '700px',
-      data: curso,
+      data: video,
     });
+  }
+
+  preguntar(video: TemarioModel){
+    console.log(this.message)
+    if(this.message.value) {
+      this.youtubeService.getRespuestaChat(video, this.message.value || "" ).subscribe(
+        responde => {
+          this.chats.push({pregunta: this.message.value || "" , respuesta: responde.respuesta})
+        }
+      )
+
+    }
   }
 
 }

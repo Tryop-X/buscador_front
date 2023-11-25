@@ -6,13 +6,7 @@ export interface Youtube {
     pageInfo:      PageInfo;
     items:         Video[];
 }
-
-// export interface Video {
-//     kind:    ItemKind;
-//     etag:    string;
-//     id:      ID;
-//     snippet: Snippet;
-// }
+1
 
 export interface Video {
   url:    string;

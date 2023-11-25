@@ -11,23 +11,66 @@
   </p>
   <h5>Aquí te ayudaremos con el material gratuito para que impulses tu aprendijaze y domines lo que quieras.</h5>
 
-  <div class="container" *ngFor="let curso of cursos">
+  <div class="container" *ngFor="let asp of temario.aspectos">
     <div class="row">
-      <h4>{{curso.tema}}</h4>
+      <h4>{{asp.aspecto}}</h4>
     </div>
     <div class="row">
-      <div class="col" *ngFor="let video of curso.videos">
+      <div class="col" *ngFor="let video of asp.videos">
         <div class="row">
-          <img src="{{ 'https://i.ytimg.com/vi/' + video.cod +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
+          <img src="{{ 'https://i.ytimg.com/vi/' + video.videoId +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
         </div>
         <div class="row mt-3">
           <h5>{{ video.title }}</h5>
         </div>
+        <div class="row">
+          <div class="col-md-6">
+            <button mat-button color="primary" (click)="abrirCurso(video)">Ver Resumen</button>
+          </div>
+          <div class="col-md-6">
+            <a  href="https://www.youtube.com/watch?v={{video.videoId}}">{{'Ver Video'}}</a>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="container" >
     <div class="row">
-      <button mat-button color="primary" (click)="abrirCurso(curso)">Realizar Test</button>
+      <h4>{{'CHATEA'}}</h4>
+    </div>
+    <div class="row">
+      <div class="container" *ngFor="let chat of chats">
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6 chat" >
+            {{'Tú: ' + chat.pregunta}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 chat">
+            {{'Experto: ' + chat.respuesta}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>Message</mat-label>
+              <input matInput maxlength="256" placeholder="Pregunta..." [formControl]="message">
+              <mat-hint align="start"><strong>Pregunta acerca del contenido</strong> </mat-hint>
+            </mat-form-field>
+          </form>
+
+        </div>
+        <div class="col-md-2">
+          <button mat-button color="primary" (click)="preguntar(temario)">Preguntar</button>
+        </div>
+      </div>
     </div>
   </div>
+
 
 </div>

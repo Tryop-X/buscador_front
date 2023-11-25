@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit{
   }
 
   buscarRuta(busqueda: string) {
-    this.service.buscarRutas(busqueda);
+    this.service.buscarTemario(busqueda);
     this.texto.nativeElement.value = "";
   }
 }

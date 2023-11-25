@@ -17,7 +17,7 @@ export class PaginaPrincipalComponent{
   }
 
   get getCursos() {
-    return this.youtubeService.cursos;
+    return this.youtubeService.temario;
   }
 
   get   getEstado() {

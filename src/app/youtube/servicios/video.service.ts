@@ -3,7 +3,7 @@ import { Tema, Video, Youtube } from '../interfaces/youtube.inteface';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from "../../../environments/environment";
-import {CursoModel} from "../interfaces/cursos.model";
+import {TemarioModel, VideoYoutube} from "../interfaces/cursos.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +22,7 @@ export class VideoService {
 
   public videosBuscados: Video[] = [];
   public videosFavoritos: Video[] = [];
-  public cursos: CursoModel[] = [];
+  public temario: TemarioModel = new TemarioModel();
   public estaCargando: boolean = false;
 
   private limit: number = 12;
@@ -67,14 +67,14 @@ export class VideoService {
   }
 
   // Implementar nuevo método --------------------------------------------------------------------------
-  buscarRutas(busqueda: string) {
+  buscarTemario(busqueda: string) {
     this.estaCargando = true;
     busqueda = busqueda.trim();
     busqueda = busqueda.toLowerCase();
 
     if((busqueda != "")) {
       this.httpClient.post<any>(
-        `${this.apiUrl}/get_cursos`,
+        `${this.apiUrl}/get_temario`,
         {'consulta': busqueda})
         .subscribe(
         (respuesta) =>  {
@@ -82,9 +82,21 @@ export class VideoService {
         if(respuesta) {
           this.estaCargando = false;
         }
-      this.cursos = respuesta;
+      this.temario = respuesta;
     });
     }
+  }
+
+  getResumen(video: VideoYoutube) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/get_resumen`,
+      {'video': video})
+  }
+
+  getRespuestaChat(temarioModel: TemarioModel, pregunta: string) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/chatear`,
+      {temario: temarioModel, pregunta: pregunta})
   }
 
   // -----------------------------------------------------------------------------------------------------

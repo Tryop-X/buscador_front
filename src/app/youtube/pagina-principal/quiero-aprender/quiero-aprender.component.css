@@ -105,3 +105,18 @@
   max-width: 100%;  /* Ajusta este valor según tu necesidad */
   display: inline-block;  /* Para asegurarse de que max-width funcione con span */
 }
+
+.example-form {
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.chat {
+  background-color: rgba(255, 255, 255, 0.1); /* Color de fondo con transparencia */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno para contenido */
+  text-align: left; /* Alineación del texto a la izquierda */
+}

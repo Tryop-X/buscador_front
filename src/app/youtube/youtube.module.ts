@@ -4,24 +4,27 @@ import { FavoritosComponent } from './favoritos/favoritos.component';
 import { PaginaPrincipalComponent } from './pagina-principal/pagina-principal.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { QuieroAprenderComponent } from './pagina-principal/quiero-aprender/quiero-aprender.component';
-import { TemaComponent } from './pagina-principal/quiero-aprender/tema/tema.component';
-import { PreguntasComponent } from './pagina-principal/quiero-aprender/preguntas/preguntas.component';
+import { ResumenComponent } from './pagina-principal/quiero-aprender/resumen/resumen.component';
 import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     FavoritosComponent,
     PaginaPrincipalComponent,
     QuieroAprenderComponent,
-    TemaComponent,
-    PreguntasComponent
+    ResumenComponent
   ],
   imports: [
     CommonModule,
     MatTabsModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     PaginaPrincipalComponent
