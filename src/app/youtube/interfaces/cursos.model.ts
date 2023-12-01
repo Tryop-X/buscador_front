@@ -21,6 +21,7 @@ export class VideoYoutube {
   urlMiniatura: string;
   transcription: string;
   resume: string;
+  isSelected: boolean;
 
   constructor(
     etag: string,
@@ -30,7 +31,8 @@ export class VideoYoutube {
     description: string,
     channelTitle: string,
     publishTime: string,
-    urlMiniatura: string
+    urlMiniatura: string,
+    isSelected: boolean
   ) {
     this.etag = etag
     this.videoId = videoId
@@ -42,14 +44,17 @@ export class VideoYoutube {
     this.urlMiniatura = urlMiniatura
     this.transcription = urlMiniatura
     this.resume = urlMiniatura
+    this.isSelected = isSelected
   }
 }
 
 export class TemarioModel {
+  id_temario: string;
   temaCentral: string;
   aspectos: Aspecto[];
 
   constructor() {
+    this.id_temario = "";
     this.temaCentral = "";
     this.aspectos = [];
   }

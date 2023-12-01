@@ -87,10 +87,10 @@ export class VideoService {
     }
   }
 
-  getResumen(video: VideoYoutube) {
+  getResumen(id_temario: string, videoId: string) {
     return this.httpClient.post<any>(
       `${this.apiUrl}/get_resumen`,
-      {'video': video})
+      {id_temario: id_temario, videoId: videoId})
   }
 
   getRespuestaChat(temarioModel: TemarioModel, pregunta: string) {
@@ -98,7 +98,11 @@ export class VideoService {
       `${this.apiUrl}/chatear`,
       {temario: temarioModel, pregunta: pregunta})
   }
-
+  generarDocumento(idTemario: string, idsVideo: string[]) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/generar_doc`,
+      {id_temario: idTemario, videoSelected: idsVideo},     {responseType: 'blob' as 'json'})
+  }
   // -----------------------------------------------------------------------------------------------------
 
 }

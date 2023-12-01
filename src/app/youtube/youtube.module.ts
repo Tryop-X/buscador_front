@@ -9,6 +9,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -17,15 +18,16 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     QuieroAprenderComponent,
     ResumenComponent
   ],
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatCheckboxModule
+    ],
   exports: [
     PaginaPrincipalComponent
   ]

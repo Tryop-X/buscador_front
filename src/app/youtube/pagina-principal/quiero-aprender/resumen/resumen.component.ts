@@ -10,17 +10,17 @@ import {VideoService} from "../../../servicios/video.service";
 export class ResumenComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: VideoYoutube,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private youtubeService: VideoService
   ) { }
 
   ngOnInit(): void {
 
-    if(this.data.resume.length <= 0){
-      this.youtubeService.getResumen(this.data).subscribe(
+    if(this.data.video.resume.length <= 0){
+      this.youtubeService.getResumen(this.data._id_temario, this.data.video.videoId).subscribe(
         response => {
-          this.data.resume = response.resume
-          this.data.transcription = response.transcription
+          this.data.video.resume = response.resume
+          this.data.video.transcription = response.transcription
         }
       )
     }
