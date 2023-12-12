@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DocumentModel, VideoYoutube} from "../../../interfaces/cursos.model";
 import {VideoService} from "../../../servicios/video.service";
 
@@ -16,6 +16,7 @@ export class DetalleComponent implements OnInit {
   error = "";
   loading = false;
   constructor(
+    public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private youtubeService: VideoService
   ) { }
@@ -43,6 +44,7 @@ export class DetalleComponent implements OnInit {
         link.download = 'revision_sistematica.pdf';
         link.click();
         this.loading = false;
+        this.dialogRef.close()
       }, errorResult => {
         this.loading = false;
         this.error = errorResult.error;

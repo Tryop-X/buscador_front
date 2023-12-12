@@ -50,15 +50,35 @@ export class TemarioModel {
   }
 }
 
-export class ChatModel {
-  pregunta: string;
-  respuesta: string;
+export class ReqQues {
+  response: string;
+  question: string;
+  date: string;
+
 
   constructor() {
-    this.pregunta = "";
-    this.respuesta = "";
+    this.question = "";
+    this.response = "";
+    this.date = "";
   }
 }
+
+export class ChatModel {
+  idChat: string;
+  idTemario: string;
+  idUsuario: string;
+  date: string;
+  conversation: ReqQues[];
+
+  constructor() {
+    this.idChat = "";
+    this.idTemario = "";
+    this.idUsuario = "";
+    this.date = "";
+    this.conversation = [];
+  }
+}
+
 
 
 export class DocumentModel {

@@ -58,6 +58,19 @@
       </div>
     </mat-expansion-panel>
 
+    <div class="row" style="background-color: rgba(255, 255, 255, 0.1); border-radius: 15px; margin-bottom: 20px">
+      <h3>{{temario.temaCentral}}</h3>
+      <h4>El contenido generado se basará en los siguientes videos</h4>
+      <div class="row">
+        <div class="col" *ngFor="let asp of temario.aspectos" style="background-color: lightslategray; border-radius: 15px; margin-left: 15px">
+          <h4>{{asp.aspecto}}</h4>
+          <div *ngFor="let video of asp.videos">
+            <ul *ngIf="video.isSelected">{{video.title}}</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <mat-expansion-panel style="margin-bottom: 20px" (opened)="getDocuments()">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -95,7 +108,7 @@
       </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel style="margin-bottom: 20px">
+    <mat-expansion-panel style="margin-bottom: 20px" (opened)="getConversation()">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Chat
@@ -105,36 +118,46 @@
 
       <div class="container" >
         <div class="row">
-          <h4>{{'CHATEA'}}</h4>
-        </div>
-        <div class="row">
-          <div class="container" *ngFor="let chat of chats">
-            <div class="row">
-              <div class="col-md-9">
+
+          <div class="container" style="max-height: 600px; overflow-y: auto">
+            <div class="container" *ngFor="let chat of conversation">
+              <div class="row" style="margin-bottom: 15px">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-9 chat" >
+                  {{chat.question}}
+                </div>
               </div>
-              <div class="col-md-9 chat" >
-                {{'Tú: ' + chat.pregunta}}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 chat">
-                {{chat.respuesta}}
+              <div class="row">
+                <div class="col-md-9 chat" style="margin-bottom: 15px">
+                  {{chat.response}}
+                </div>
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-md-12" style="display: flex; justify-content: center; align-items: center;" *ngIf="!loadingChat && errorChat !== ''">
+              <mat-error>{{errorChat}}</mat-error>
+            </div>
+            <div class="col-md-12" style="display: flex; justify-content: center; align-items: center" *ngIf="loadingChat && errorChat === ''">
+              <mat-spinner diameter="20"></mat-spinner>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-md-10">
               <form class="example-form">
                 <mat-form-field class="example-full-width">
                   <mat-label>Message</mat-label>
-                  <input matInput maxlength="256" placeholder="Pregunta..." [formControl]="message" (keyup.enter)="preguntar()">
+                  <input matInput maxlength="256" placeholder="Pregunta..." [formControl]="message" (keyup.enter)="preguntar(loadingChat)">
                   <mat-hint align="start"><strong>Pregunta acerca del contenido</strong> </mat-hint>
                 </mat-form-field>
               </form>
 
             </div>
             <div class="col-md-2">
-              <button mat-button color="primary" (click)="preguntar()"><mat-icon>send</mat-icon></button>
+              <button mat-button color="primary" (click)="preguntar(loadingChat)" [disabled]="loadingChat"><mat-icon>send</mat-icon></button>
             </div>
           </div>
         </div>

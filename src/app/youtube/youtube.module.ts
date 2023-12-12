@@ -15,6 +15,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { DetalleComponent } from './pagina-principal/quiero-aprender/detalle/detalle.component';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatExpansionModule,
     NgOptimizedImage,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDividerModule
   ],
   exports: [
     PaginaPrincipalComponent

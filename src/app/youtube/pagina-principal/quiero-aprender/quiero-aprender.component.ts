@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Aspecto, ChatModel, DocumentModel, TemarioModel, VideoYoutube} from "../../interfaces/cursos.model";
+import {Aspecto, ReqQues, DocumentModel, TemarioModel, VideoYoutube, ChatModel} from "../../interfaces/cursos.model";
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ResumenComponent} from "./resumen/resumen.component";
 import {VideoService} from "../../servicios/video.service";
@@ -7,6 +7,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {LoginService} from "../../servicios/login.service";
 import {DetalleComponent} from "./detalle/detalle.component";
 import {YoutubeModule} from "../../youtube.module";
+import {error} from "@angular/compiler-cli/src/transformers/util";
 @Component({
   selector: 'app-quiero-aprender',
   templateUrl: './quiero-aprender.component.html',
@@ -18,11 +19,14 @@ export class QuieroAprenderComponent implements OnInit {
   @Input("temario") temario: TemarioModel = new TemarioModel();
 
   message = new FormControl('', [Validators.required]);
-  chats: ChatModel[] = []
+  conversation: ReqQues[] = []
   documents: DocumentModel[] = []
   loadingPdf = false;
   errorPdf = '';
+  loadingChat  = false;
+  errorChat  = '';
   nuevaVista = true;
+  chat = new ChatModel();
   constructor(
     public dialog: MatDialog,
     private youtubeService: VideoService,
@@ -40,7 +44,13 @@ export class QuieroAprenderComponent implements OnInit {
     });
   }
 
-  preguntar(){
+  preguntar(isPosible: boolean){
+    if (isPosible) {
+      return
+    }
+
+    this.errorChat = "";
+    this.loadingChat = true;
 
     if(this.message.value) {
       let videoSelected: string[] = []
@@ -56,12 +66,17 @@ export class QuieroAprenderComponent implements OnInit {
         videoSelected,
         token: this.loginService.token,
         idTemario: this.temario.idTemario,
-        pregunta: this.message.value
+        pregunta: this.message.value,
+        idChat: this.chat.idChat
       }
 
       this.youtubeService.getRespuestaChat(model).subscribe(
-        responde => {
-          this.chats.push({pregunta: this.message.value || "" , respuesta: responde.respuesta})
+        response => {
+          this.conversation.push({question: this.message.value || "" , response: response.respuesta, date: ''})
+          this.loadingChat = false;
+        }, error => {
+          this.errorChat = error.message
+          this.loadingChat = false;
         }
       )
     }
@@ -76,7 +91,7 @@ export class QuieroAprenderComponent implements OnInit {
         this.loadingPdf = false;
       }, error => {
         this.loadingPdf = false;
-        this.errorPdf = error.error
+        this.errorPdf = error.message
       }
     )
   }
@@ -104,7 +119,7 @@ export class QuieroAprenderComponent implements OnInit {
         this.getDocuments()
       }, error => {
         this.loadingPdf = false;
-        this.errorPdf = 'Ha ocurrido un error al generar el documento'
+        this.errorPdf = error.message
       }
     )
 
@@ -127,5 +142,29 @@ export class QuieroAprenderComponent implements OnInit {
     });
   }
 
-  protected readonly Date = Date;
+  getConversation() {
+    this.loadingChat = true;
+    this.chat.conversation = [];
+    const model = {
+      idTemario: this.temario.idTemario,
+      token: this.loginService.token
+    }
+    this.youtubeService.getConversarion(model).subscribe(
+      response => {
+        this.loadingChat = false;
+
+        this.chat = response
+        this.conversation = this.chat.conversation ? this.chat.conversation : []
+      }, error => {
+        console.log(error)
+        this.loadingChat = false;
+        this.errorChat = error.message
+      }
+    )
+  }
+
+  getSelectedVideo(videos: any){
+
+  }
+
 }

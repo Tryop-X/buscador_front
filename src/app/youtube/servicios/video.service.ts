@@ -61,12 +61,17 @@ export class VideoService {
   getResumen(id_temario: string, videoId: string) {
     return this.httpClient.post<any>(
       `${this.apiUrl}/get_resumen`,
-      {id_temario: id_temario, videoId: videoId})
+      {idTemario: id_temario, videoId: videoId})
   }
 
   getRespuestaChat(model: any) {
     return this.httpClient.post<any>(
       `${this.apiUrl}/chatear`, model)
+  }
+
+  getConversarion(model: any) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/get_conversation`, model)
   }
   generarDocumento(idTemario: string, idsVideo: string[], token: string) {
     return this.httpClient.post<any>(
