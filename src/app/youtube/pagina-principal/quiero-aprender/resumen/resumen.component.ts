@@ -17,7 +17,7 @@ export class ResumenComponent implements OnInit {
   ngOnInit(): void {
 
     if(this.data.video.resume.length <= 0){
-      this.youtubeService.getResumen(this.data._id_temario, this.data.video.videoId).subscribe(
+      this.youtubeService.getResumen(this.data.idTemario, this.data.video.videoId).subscribe(
         response => {
           this.data.video.resume = response.resume
           this.data.video.transcription = response.transcription

@@ -120,3 +120,23 @@
   padding: 20px; /* Espaciado interno para contenido */
   text-align: left; /* Alineación del texto a la izquierda */
 }
+
+.contenedor-video{
+  margin-top: 15px;
+  padding-top: 15px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1)
+}
+
+.contenedor-pdf{
+  width: 22%;
+  margin-top: 5px;
+  margin-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1)
+}
+

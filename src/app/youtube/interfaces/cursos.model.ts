@@ -23,38 +23,28 @@ export class VideoYoutube {
   resume: string;
   isSelected: boolean;
 
-  constructor(
-    etag: string,
-    videoId: string,
-    channelId: string,
-    title: string,
-    description: string,
-    channelTitle: string,
-    publishTime: string,
-    urlMiniatura: string,
-    isSelected: boolean
-  ) {
-    this.etag = etag
-    this.videoId = videoId
-    this.channelId = channelId
-    this.title = title
-    this.description = description
-    this.channelTitle = channelTitle
-    this.publishTime = publishTime
-    this.urlMiniatura = urlMiniatura
-    this.transcription = urlMiniatura
-    this.resume = urlMiniatura
-    this.isSelected = isSelected
+  constructor( ) {
+    this.etag = '';
+    this.videoId = '';
+    this.channelId = '';
+    this.title = '';
+    this.description = '';
+    this.channelTitle = '';
+    this.publishTime = '';
+    this.urlMiniatura = '';
+    this.transcription = '';
+    this.resume = '';
+    this.isSelected = false;
   }
 }
 
 export class TemarioModel {
-  id_temario: string;
+  idTemario: string;
   temaCentral: string;
   aspectos: Aspecto[];
 
   constructor() {
-    this.id_temario = "";
+    this.idTemario = "";
     this.temaCentral = "";
     this.aspectos = [];
   }
@@ -67,6 +57,29 @@ export class ChatModel {
   constructor() {
     this.pregunta = "";
     this.respuesta = "";
+  }
+}
+
+
+export class DocumentModel {
+  idDocument: string;
+  idUsuario: string;
+  idTemario: string;
+  temaCentral: string;
+  contendPdf: string;
+  qualification: number;
+  citas: string[];
+  date: string;
+
+  constructor() {
+    this.idDocument = '';
+    this.idUsuario = '';
+    this.idTemario = '';
+    this.temaCentral = '';
+    this.contendPdf = '';
+    this.qualification = -1;
+    this.citas = [];
+    this.date = '';
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { VideoService } from '../../youtube/servicios/video.service';
 import { Subscription } from 'rxjs';
+import {LoginService} from "../../youtube/servicios/login.service";
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,10 @@ import { Subscription } from 'rxjs';
 })
 export class NavbarComponent implements OnInit{
 
-  constructor(private service:VideoService) { }
+  constructor(
+    private service:VideoService,
+    private loginService: LoginService,
+  ) { }
 
   //suscripcionDatos: Subscription;
   tituloImagen: string = "brand.png";
@@ -24,13 +28,9 @@ export class NavbarComponent implements OnInit{
     });
   }
 
-  buscar(busqueda: string) {
-    this.service.buscarVideo(busqueda);
+  buscarRuta(busqueda: string) {
+    this.service.buscarTemario(busqueda, this.loginService.token, this.loginService.temarios);
     this.texto.nativeElement.value = "";
   }
 
-  buscarRuta(busqueda: string) {
-    this.service.buscarTemario(busqueda);
-    this.texto.nativeElement.value = "";
-  }
 }

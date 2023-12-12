@@ -3,7 +3,7 @@ import { Tema, Video, Youtube } from '../interfaces/youtube.inteface';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from "../../../environments/environment";
-import {TemarioModel, VideoYoutube} from "../interfaces/cursos.model";
+import {DocumentModel, TemarioModel, VideoYoutube} from "../interfaces/cursos.model";
 @Injectable({
   providedIn: 'root'
 })
@@ -20,39 +20,9 @@ export class VideoService {
   private currentTab = new BehaviorSubject<string>("S"); // Cambia 'any' y 'valorInicial' según tus necesidades
   datosActuales = this.currentTab.asObservable();
 
-  public videosBuscados: Video[] = [];
   public videosFavoritos: Video[] = [];
   public temario: TemarioModel = new TemarioModel();
   public estaCargando: boolean = false;
-
-  private limit: number = 12;
-
-  buscarVideo(busqueda: string) {
-    this.estaCargando = true;
-    busqueda = busqueda.trim();
-    busqueda = busqueda.toLowerCase();
-
-    if((busqueda != "")) {
-      this.httpClient.get<Video[]>(`${this.apiUrl}/get_video?consulta=${busqueda}`)
-        .subscribe(
-        (respuesta) =>  {
-        if(respuesta) {
-          this.estaCargando = false;
-        }
-
-      this.videosBuscados = respuesta;
-    });
-    }
-  }
-
-  agregarVideoAFavoritos(video: Video) {
-    if(!this.videosFavoritos.some(videoEnArray => videoEnArray.cod == video.cod)) {
-      this.videosFavoritos.push(video);
-      console.log(this.videosFavoritos);
-
-      localStorage.setItem("Favoritos", JSON.stringify(this.videosFavoritos));
-    }
-  }
 
   borrarVideoFavorito(id: string) {
     let indice = this.videosFavoritos.findIndex(videoEnArray => videoEnArray.cod == id);
@@ -67,22 +37,23 @@ export class VideoService {
   }
 
   // Implementar nuevo método --------------------------------------------------------------------------
-  buscarTemario(busqueda: string) {
+  buscarTemario(busqueda: string, token: string, temarios: TemarioModel[]) {
     this.estaCargando = true;
     busqueda = busqueda.trim();
     busqueda = busqueda.toLowerCase();
-
     if((busqueda != "")) {
       this.httpClient.post<any>(
         `${this.apiUrl}/get_temario`,
-        {'consulta': busqueda})
+        {'consulta': busqueda, token})
         .subscribe(
         (respuesta) =>  {
-
         if(respuesta) {
           this.estaCargando = false;
         }
-      this.temario = respuesta;
+        this.temario = respuesta;
+        if(!temarios.map(tem => tem.idTemario).includes(this.temario.idTemario)){
+          temarios.push(this.temario)
+        }
     });
     }
   }
@@ -93,16 +64,28 @@ export class VideoService {
       {id_temario: id_temario, videoId: videoId})
   }
 
-  getRespuestaChat(temarioModel: TemarioModel, pregunta: string) {
+  getRespuestaChat(model: any) {
     return this.httpClient.post<any>(
-      `${this.apiUrl}/chatear`,
-      {temario: temarioModel, pregunta: pregunta})
+      `${this.apiUrl}/chatear`, model)
   }
-  generarDocumento(idTemario: string, idsVideo: string[]) {
+  generarDocumento(idTemario: string, idsVideo: string[], token: string) {
     return this.httpClient.post<any>(
       `${this.apiUrl}/generar_doc`,
-      {id_temario: idTemario, videoSelected: idsVideo},     {responseType: 'blob' as 'json'})
+      {id_temario: idTemario, videoSelected: idsVideo, token},     {responseType: 'blob' as 'json'})
   }
+
+  getDocuments(idTemario: string, token: string) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/get_documents`,
+      {idTemario: idTemario, token})
+      }
+  getDocument(doc: DocumentModel) {
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/get_document`,
+      doc,{responseType: 'blob' as 'json'}
+    )
+  }
+
   // -----------------------------------------------------------------------------------------------------
 
 }

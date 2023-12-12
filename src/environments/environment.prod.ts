@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api: 'http://tryopx-38333.portmap.host:38333/'
+  api: 'https://67ba-179-6-166-186.ngrok-free.app'
 };

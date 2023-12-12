@@ -3,7 +3,6 @@
 </div>
 
 <div class="datos" *ngIf="!estado">
-
   <div *ngIf="temario.aspectos.length <= 0">
     <h4>
       <strong>¡Bienvenido al asistente de aprendijaze!</strong>
@@ -14,83 +13,143 @@
     <h5>Aquí te ayudaremos con el material gratuito para que impulses tu aprendijaze y domines lo que quieras.</h5>
   </div>
 
-  <div class="container" *ngFor="let asp of temario.aspectos">
-    <div class="row">
-      <h4>{{asp.aspecto}}</h4>
-    </div>
-    <div class="row">
-      <div class="col" *ngFor="let video of asp.videos">
-        <div class="row">
-          <img src="{{ 'https://i.ytimg.com/vi/' + video.videoId +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
-        </div>
-        <div class="row mt-3">
-          <h4>{{ video.title }}</h4>
-        </div>
-        <div class="row" style="font-size: 9px; color: beige; text-align: initial; margin-bottom: 0px; margin-top: 0px">
-          <ul style="margin-bottom: 0px; margin-top: 0px">{{video.channelTitle}}</ul>
-          <ul style="margin-bottom: 0px; margin-top: 0px">{{video.publishTime | date:"dd/MM/yyyy" }}</ul>
-        </div>
-        <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="video.isSelected">Checked</mat-checkbox>
-        </section>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="nuevaVista" style="margin-bottom: 20px">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Vídeos
+        </mat-panel-title>
+        <mat-panel-description style="color: azure; margin-left: 15%; font-size: 20px;">
+          {{temario.temaCentral}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
+
+      <div class="container contenedor-video" *ngFor="let asp of temario.aspectos">
         <div class="row">
-          <div class="col-md-6">
-            <button mat-button color="primary" (click)="abrirCurso(video)">Ver Resumen</button>
-          </div>
-          <div class="col-md-6">
-            <a  href="https://www.youtube.com/watch?v={{video.videoId}}">{{'Ver Video'}}</a>
+          <h4>{{asp.aspecto}}</h4>
+        </div>
+        <div class="row">
+          <div class="col" *ngFor="let video of asp.videos">
+            <div class="row">
+              <img src="{{ 'https://i.ytimg.com/vi/' + video.videoId +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
+            </div>
+            <div class="row mt-3" style="max-height: 40px; min-height: 40px">
+              <h5>{{ video.title }}</h5>
+            </div>
+            <div class="row" style="font-size: 9px; color: beige; text-align: initial; margin-bottom: 0px; margin-top: 0px">
+              <ul style="margin-bottom: 0px; margin-top: 0px">{{video.channelTitle}}</ul>
+              <ul style="margin-bottom: 0px; margin-top: 0px">{{video.publishTime | date:"dd/MM/yyyy" }}</ul>
+            </div>
+            <section class="example-section">
+              <mat-checkbox class="example-margin" [(ngModel)]="video.isSelected">Checked</mat-checkbox>
+            </section>
+
+            <div class="row">
+              <div class="col-md-6">
+                <button mat-button color="primary" (click)="abrirCurso(video)">Ver Resumen</button>
+              </div>
+              <div class="col-md-6">
+                <a  href="https://www.youtube.com/watch?v={{video.videoId}}">{{'Ver Video'}}</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mat-expansion-panel>
 
-
-  <div class="container" >
-    <div class="row">
-      <div class="col-md-12">
-        <button mat-button color="primary" (click)="generarDocumento(temario)" style="width: 100%; background: azure">Generar Documento</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="container" >
-    <div class="row">
-      <h4>{{'CHATEA'}}</h4>
-    </div>
-    <div class="row">
-      <div class="container" *ngFor="let chat of chats">
+    <mat-expansion-panel style="margin-bottom: 20px" (opened)="getDocuments()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Documentos
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="container">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-10" style="display: flex; justify-content: center; align-items: center;" *ngIf="!loadingPdf && errorPdf !== ''">
+            <mat-error>{{errorPdf}}</mat-error>
           </div>
-          <div class="col-md-6 chat" >
-            {{'Tú: ' + chat.pregunta}}
+          <div class="col-md-10" style="display: flex; justify-content: center; align-items: center;" *ngIf="loadingPdf && errorPdf === ''">
+            <mat-spinner></mat-spinner>
           </div>
+          <div class="col-md-10" *ngIf="!loadingPdf && errorPdf === ''">
+            <div class="row">
+              <div class="col-md-3 contenedor-pdf" *ngFor="let doc of documents" >
+                  <h4>{{doc.temaCentral}}</h4>
+                  <h6>{{doc.date}}</h6>
+                  <button mat-button color="primary" style="width: 100%; background: darkgray;" (click)="abrirDetalle(doc)">Detalle</button>
+              </div>
+              </div>
+          </div>
+          <div class="col-md-2">
+            <button mat-button color="primary"
+                    (click)="generarDocumento(temario)"
+                    style="width: 100%; background: darkgray; height: 125px"
+                    [disabled]="loadingPdf"
+            >
+              <img ngSrc="assets/pdf.png" alt="pdf_icon" height="80" width="80">
+              <br>Generar Pdf
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel style="margin-bottom: 20px">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Chat
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+
+      <div class="container" >
+        <div class="row">
+          <h4>{{'CHATEA'}}</h4>
         </div>
         <div class="row">
-          <div class="col-md-6 chat">
-            {{'Experto: ' + chat.respuesta}}
+          <div class="container" *ngFor="let chat of chats">
+            <div class="row">
+              <div class="col-md-9">
+              </div>
+              <div class="col-md-9 chat" >
+                {{'Tú: ' + chat.pregunta}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 chat">
+                {{chat.respuesta}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Message</mat-label>
+                  <input matInput maxlength="256" placeholder="Pregunta..." [formControl]="message" (keyup.enter)="preguntar()">
+                  <mat-hint align="start"><strong>Pregunta acerca del contenido</strong> </mat-hint>
+                </mat-form-field>
+              </form>
+
+            </div>
+            <div class="col-md-2">
+              <button mat-button color="primary" (click)="preguntar()"><mat-icon>send</mat-icon></button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-10">
-          <form class="example-form">
-            <mat-form-field class="example-full-width">
-              <mat-label>Message</mat-label>
-              <input matInput maxlength="256" placeholder="Pregunta..." [formControl]="message">
-              <mat-hint align="start"><strong>Pregunta acerca del contenido</strong> </mat-hint>
-            </mat-form-field>
-          </form>
 
-        </div>
-        <div class="col-md-2">
-          <button mat-button color="primary" (click)="preguntar(temario)">Preguntar</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+
+
+
+
+
 
 
 </div>

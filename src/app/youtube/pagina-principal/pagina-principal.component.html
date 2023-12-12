@@ -1,47 +1,50 @@
 <div class="row contenedor">
-  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" animationDuration="0ms" (selectedTabChange)="onTabChanged($event)">
-    <mat-tab label="Buscar Contenido">
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" animationDuration="0ms" #mattab (selectedTabChange)="onTabChanged($event)">
+    <mat-tab label="Usuario">
       <div class="row conteiner">
-
-        <div class="col-12 col-lg-12 d-flex justify-content-center align-items-center spinner" *ngIf="getEstado">
+        <div class="col-12 col-lg-12 d-flex justify-content-center align-items-center spinner" *ngIf="getEstado || getLoading">
           <div class="loader"></div>
         </div>
 
-        <div class="col-12 col-lg-3 col-md-4 col-sm-6" *ngFor="let video of getVideos">
-          <div class="card mt-3 mb-3">
-              <div class="card-body">
-
-                  <div class="row">
-                      <img src="{{ 'https://i.ytimg.com/vi/' + video.cod +  '/hqdefault.jpg' }}" alt="Imagen no disponible">
-                  </div>
-
-                  <div class="row mt-3">
-                      <h5>{{ video.title }}</h5>
-                  </div>
-
-                  <div class="row d-flex flex-row" *ngFor="let trans of video.transcription">
-                      <div class="col-12 col-lg-6">
-                        <span class="truncateContent">{{trans.content}}</span>
-                      </div>
-                      <div class="col-12 col-lg-6 d-flex align-items-end">
-                          <a  href="https://www.youtube.com/watch?v={{video.cod}}&t={{trans.start}}s">{{convertSecondsToMinutes(trans.start, trans.end)}}</a>
-                      </div>
-
-                  </div>
-
-                  <div class="row mt-3 d-flex justify-content-around">
-  <!--                    <a class="btn text-white bg-dark botonVer" href="https://www.youtube.com/watch?v={{video.cod}}" target="_blank">Ver</a>-->
-                      <a class="btn text-white bg-danger botonFavs" (click)="agregarVideo(video)">&#8902;</a>
-                  </div>
-
-              </div>
+        <div class="example-container" style="padding-left: 40%; padding-right: 40%; margin-top: 30px" *ngIf="getToken === ''">
+          <mat-error *ngIf="getError !== ''">{{getError}}</mat-error>
+          <div class="row" style="padding-left: 10%; padding-right: 10%; margin-bottom: 30px">
+            <img src="assets/login.png" alt="login_icon">
+          </div>
+          <div class="row conteiner">
+            <mat-form-field appearance="fill">
+              <mat-label>Usuario</mat-label>
+              <input matInput [type]="'text'" [(ngModel)]="usuario">
+            </mat-form-field>
+          </div>
+          <div class="row conteiner">
+            <mat-form-field appearance="fill">
+              <mat-label>Enter your password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="contrasegna">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <button mat-button color="primary" style="width: 100%; background: darkgray; margin-bottom: 50px" (click)="login()" [disabled]="getLoading">Iniciar Sesión</button>
           </div>
         </div>
+
+        <div class="example-container" style="padding-left: 5%; padding-right: 5%; margin-top: 25px; margin-bottom: 25px" *ngIf="getToken !== ''">
+          <h1>Historial de Búsqueda</h1>
+          <div class="row">
+            <div class="col-md-3" *ngFor="let tem of getListaTemario">
+              <button mat-button color="primary" style="width: 100%; background: darkgray; margin-bottom: 25px" (click)="revisar(tem)">{{tem.temaCentral}}</button>
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </mat-tab>
-
-    <mat-tab label="Quiero Aprender">
-      <app-quiero-aprender [estado]="getEstado" [temario]="getCursos"></app-quiero-aprender>
+    <mat-tab label="Temario" [disabled]="getToken === ''">
+      <app-quiero-aprender [estado]="getEstado" [temario]="getTemario"></app-quiero-aprender>
     </mat-tab>
   </mat-tab-group>
 </div>

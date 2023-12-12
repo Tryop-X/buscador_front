@@ -105,3 +105,12 @@
   max-width: 100%;  /* Ajusta este valor según tu necesidad */
   display: inline-block;  /* Para asegurarse de que max-width funcione con span */
 }
+
+
+.contenedor_temas {
+  margin-top: 5px;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1)
+}
