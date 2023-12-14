@@ -29,7 +29,7 @@ export class ResumenComponent implements OnInit {
           this.data.video.resume = response.resume
           this.data.video.transcription = response.transcription
         }, error => {
-          this.errorResumen = error.message;
+          this.errorResumen = error.error.message;
         }
       )
     }

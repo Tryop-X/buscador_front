@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { VideoService } from '../servicios/video.service';
 import {MatTabChangeEvent, MatTabGroup} from '@angular/material/tabs';
 import {LoginService} from "../servicios/login.service";
@@ -9,11 +9,13 @@ import {TemarioModel} from "../interfaces/cursos.model";
   templateUrl: './pagina-principal.component.html',
   styleUrls: ['./pagina-principal.component.css']
 })
-export class PaginaPrincipalComponent{
+export class PaginaPrincipalComponent implements OnInit{
 
   hide = true;
   usuario = '';
   contrasegna = '';
+  nombreCompleto = '';
+  isRegistro = false;
   @ViewChild(MatTabGroup) mattab!: MatTabGroup ;
 
   constructor(
@@ -21,6 +23,14 @@ export class PaginaPrincipalComponent{
     private loginService: LoginService,
   ) {
 
+  }
+
+  ngOnInit(): void {
+    this.loginService.logout$.subscribe( value => {
+      if (value === "logout") {
+        this.mattab.selectedIndex = 0;
+      }
+    })
   }
 
   get getTemario() {
@@ -49,6 +59,11 @@ export class PaginaPrincipalComponent{
   login() {
     this.loginService.login(this.usuario, this.contrasegna)
   }
+
+  registrar() {
+    this.loginService.registrar(this.usuario, this.nombreCompleto, this.contrasegna)
+  }
+
 
   revisar(temario: TemarioModel) {
     this.youtubeService.temario = temario

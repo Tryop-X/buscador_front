@@ -33,4 +33,9 @@ export class NavbarComponent implements OnInit{
     this.texto.nativeElement.value = "";
   }
 
+  logout() {
+    this.loginService.token = ""
+    this.loginService.loginOut()
+  }
+
 }

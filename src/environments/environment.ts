@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'https://5bcb-179-6-166-186.ngrok-free.app'
+  // api: 'https://5bcb-179-6-166-186.ngrok-free.app'
+  api: 'http://127.0.0.1:5000'
 };
 
 /*

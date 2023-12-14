@@ -16,6 +16,8 @@ export class LoginService {
   public loading = false;
   public temarios: TemarioModel[] = [];
 
+  private logout = new BehaviorSubject<string>('');
+  logout$ = this.logout.asObservable()
 
   constructor(private httpClient: HttpClient) {
     if(localStorage.getItem("token")){
@@ -25,6 +27,9 @@ export class LoginService {
 
   //public currentTab = "";
 
+  loginOut(){
+    this.logout.next("logout")
+  }
 
   login(usuario: string, contrasegna: string) {
     this.loading = true;
@@ -34,15 +39,34 @@ export class LoginService {
         result => {
           this.token = result.token
           this.temarios = result.temarios
-          console.log(this.temarios)
           this.loading = false;
+          this.logout.next("")
         }, error => {
           this.loading = false;
-          console.log(error)
-          this.error = 'Ha sucedido un error al intentar iniciar sesión'
+          this.logout.next("logout")
+          this.error = error.error.message
       }
     )
   }
+
+  registrar(usuario: string, nombreUsuario: string, contrasegna: string) {
+    this.loading = true;
+    return this.httpClient.post<any>(
+      `${this.apiUrl}/registrar`,
+      {usuario: usuario, nombreUsuario: nombreUsuario, contrasegna: contrasegna}).subscribe(
+      result => {
+        this.token = result.idUsuario
+        this.temarios = []
+        this.loading = false;
+        this.logout.next("")
+      }, error => {
+        this.loading = false;
+        this.logout.next("logout")
+        this.error = error.error.message
+      }
+    )
+  }
+
 
 
   // -----------------------------------------------------------------------------------------------------

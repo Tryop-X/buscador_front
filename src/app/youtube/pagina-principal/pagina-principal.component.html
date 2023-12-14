@@ -6,11 +6,57 @@
           <div class="loader"></div>
         </div>
 
-        <div class="example-container" style="padding-left: 40%; padding-right: 40%; margin-top: 30px" *ngIf="getToken === ''">
+
+        <div class="example-container" style="padding-left: 40%; padding-right: 40%; margin-top: 30px" *ngIf="(getToken === '' && isRegistro) && !getLoading">
+          <mat-error *ngIf="getError !== ''">{{getError}}</mat-error>
+          <div class="row" style="padding-left: 10%; padding-right: 10%; margin-bottom: 10px">
+            <img src="assets/userAdd.png" alt="login_icon">
+          </div>
+          <mat-label style="font-size: 18px">REGISTRAR</mat-label>
+          <div class="row conteiner">
+            <mat-form-field appearance="fill">
+              <mat-label>Usuario</mat-label>
+              <input matInput [type]="'text'" [(ngModel)]="usuario">
+            </mat-form-field>
+          </div>
+          <div class="row conteiner">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre completo</mat-label>
+              <input matInput [type]="'text'" [(ngModel)]="nombreCompleto">
+            </mat-form-field>
+          </div>
+          <div class="row conteiner">
+            <mat-form-field appearance="fill">
+              <mat-label>Enter your password</mat-label>
+              <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="contrasegna">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <button mat-button color="primary" style="width: 100%; background: darkgray"
+                    (click)="registrar()"
+                    [disabled]="getLoading || nombreCompleto == '' || usuario == '' || contrasegna == ''"
+            >Registrar</button>
+            <button
+              mat-button color="primary"
+              style="width: 20%; margin-left: 80%;margin-bottom: 50px;
+                margin-top: 15px;"
+              (click)="isRegistro = false"
+            >Cancelar</button>
+
+          </div>
+
+        </div>
+
+
+        <div class="example-container" style="padding-left: 40%; padding-right: 40%; margin-top: 30px" *ngIf="(getToken === '' && !isRegistro) && !getLoading">
           <mat-error *ngIf="getError !== ''">{{getError}}</mat-error>
           <div class="row" style="padding-left: 10%; padding-right: 10%; margin-bottom: 30px">
             <img src="assets/login.png" alt="login_icon">
           </div>
+          <mat-label style="font-size: 18px">INICIAR SESIÓN</mat-label>
           <div class="row conteiner">
             <mat-form-field appearance="fill">
               <mat-label>Usuario</mat-label>
@@ -27,8 +73,20 @@
             </mat-form-field>
           </div>
           <div class="row">
-            <button mat-button color="primary" style="width: 100%; background: darkgray; margin-bottom: 50px" (click)="login()" [disabled]="getLoading">Iniciar Sesión</button>
+            <button mat-button color="primary" style="width: 100%; background: darkgray;" (click)="login()"
+                    [disabled]="getLoading || usuario == '' || contrasegna == ''"
+            >Iniciar Sesión</button>
           </div>
+
+          <div class="row align-content-end">
+            <button
+              mat-button color="primary"
+              style="width: 20%; margin-left: 80%; margin-bottom: 50px;
+                margin-top: 15px;"
+              (click)="isRegistro = true"
+            >Registrar</button>
+          </div>
+
         </div>
 
         <div class="example-container" style="padding-left: 5%; padding-right: 5%; margin-top: 25px; margin-bottom: 25px" *ngIf="getToken !== ''">

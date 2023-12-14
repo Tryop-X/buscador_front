@@ -75,7 +75,7 @@ export class QuieroAprenderComponent implements OnInit {
           this.conversation.push({question: this.message.value || "" , response: response.respuesta, date: ''})
           this.loadingChat = false;
         }, error => {
-          this.errorChat = error.message
+          this.errorChat = error.error.message
           this.loadingChat = false;
         }
       )
@@ -91,7 +91,7 @@ export class QuieroAprenderComponent implements OnInit {
         this.loadingPdf = false;
       }, error => {
         this.loadingPdf = false;
-        this.errorPdf = error.message
+        this.errorPdf = error.error.message
       }
     )
   }
@@ -119,7 +119,7 @@ export class QuieroAprenderComponent implements OnInit {
         this.getDocuments()
       }, error => {
         this.loadingPdf = false;
-        this.errorPdf = error.message
+        this.errorPdf = error.error.message
       }
     )
 
@@ -158,7 +158,7 @@ export class QuieroAprenderComponent implements OnInit {
       }, error => {
         console.log(error)
         this.loadingChat = false;
-        this.errorChat = error.message
+        this.errorChat = error.error.message
       }
     )
   }
