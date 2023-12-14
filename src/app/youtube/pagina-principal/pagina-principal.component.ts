@@ -28,6 +28,10 @@ export class PaginaPrincipalComponent implements OnInit{
   ngOnInit(): void {
     this.loginService.logout$.subscribe( value => {
       if (value === "logout") {
+        this.nombreCompleto = '';
+        this.contrasegna = '';
+        this.usuario = '';
+        this.isRegistro = false;
         this.mattab.selectedIndex = 0;
       }
     })
